@@ -27,7 +27,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
     this->setStyleSheet("QMainWindow {background-color: white;}"
                         "QListWidget {background-color: white;}"
-                        "QPushButton {background-color: white; border-style: solid; border-color: red; border-width: 5px; border-radius: 25px; max-width : 40; max-height : 40; min-width : 40; min-height : 40}");
+                        "QPushButton {background-color: white; border-style: solid; border-color: red; border-width: 5px; border-radius: 25px; max-width : 40; max-height : 40; min-width : 40; min-height : 40;}");
 
 
     label = new QLabel;
@@ -37,8 +37,8 @@ MainWindow::MainWindow(QWidget *parent) :
     playlist = new QMediaPlaylist;
 
 
-    playlist->addMedia(QUrl::fromLocalFile("C:/MagnetPull.mp3"));
-    playlist->addMedia(QUrl::fromLocalFile("C:/MagnetPull.mp3"));
+    //playlist->addMedia(QUrl::fromLocalFile("C:/MagnetPull.mp3"));
+    //playlist->addMedia(QUrl::fromLocalFile("C:/MagnetPull.mp3"));
     //playlist->addMedia(QUrl::fromLocalFile("C:/MagnetPull.mp3"));
     //playlist->setCurrentIndex(1);
 
@@ -51,42 +51,20 @@ MainWindow::MainWindow(QWidget *parent) :
 
     //QRegion region(QRect(0, 0, 50, 50), QRegion::Ellipse);
 
-
-
-
     pushButtonPlay = new QPushButton("Play");
-    //pushButtonPlay->setFixedSize(100, 100);
-    //pushButtonPlay->setIcon(QIcon(newPixmap));
-   // pushButtonPlay->setMask(newPixmap.mask());
-
-    //pushButtonPlay->setMask(region);
-
     connect(pushButtonPlay, SIGNAL(clicked()), this, SLOT(play()));
 
-    //QPixmap pixmap(":/images/images/play.png");
-    //QIcon ButtonIcon(pixmap);
-    //pushButtonPlay->setIcon(ButtonIcon);
-    //pushButtonPlay->setFixedWidth(pushButtonPlay->height());
-    //pushButtonPlay->setIconSize(pixmap.rect().size());
-
     pushButtonStop = new QPushButton("Stop");
-    //pushButtonStop->setFixedSize(50, 50);
-    //pushButtonStop->setMask(newPixmap.mask());
-
-    //pushButtonStop->setMask(region);
     connect(pushButtonStop, SIGNAL(clicked()), this, SLOT(stop()));
 
     pushButtonPause = new QPushButton("Pause");
-    //pushButtonPause->setFixedSize(50, 50);
-    //pushButtonPause->setMask(newPixmap.mask());
-    //pushButtonPause->setMask(region);
     connect(pushButtonPause, SIGNAL(clicked()), this, SLOT(pause()));
 
 
     //player->play();
 
-    listWidgetPlaylist = new QListWidget;
-    listWidgetPlaylist->addItem("new");
+    listWidgetPlaylist = new MyListWidget(playlist);//QListWidget;
+    //listWidgetPlaylist->addItem("new");
 
 
     QHBoxLayout* hLayout = new QHBoxLayout;
@@ -128,12 +106,18 @@ void MainWindow::setPositionSlider(qint64 t)
 
 void MainWindow::play()
 {
-    player->play();
+    if(playlist->isEmpty())
+        return;
+
+
     qint64 t = player->duration();
     QString str = "All time:" + QTime(0, 0, 0).addMSecs(t).toString("hh:mm:ss");
 
     progressBar->setMinimum(0);
     progressBar->setMaximum(t);
+    progressBar->setValue(0);
+
+    player->play();
 
     qDebug() << str;
 }

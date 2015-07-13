@@ -10,6 +10,7 @@
 #include <QListWidget>
 
 #include "mybutton.h"
+#include "mylistwidget.h"
 
 
 namespace Ui {
@@ -40,7 +41,9 @@ private:
     QPushButton* pushButtonPlay;
     QPushButton* pushButtonStop;
     QPushButton* pushButtonPause;
-    QListWidget* listWidgetPlaylist;
+    //QListWidget* listWidgetPlaylist;
+    MyListWidget* listWidgetPlaylist;
+
 
 };
 

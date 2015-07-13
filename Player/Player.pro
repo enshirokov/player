@@ -14,10 +14,12 @@ TEMPLATE = app
 
 SOURCES += main.cpp\
         mainwindow.cpp \
-    mybutton.cpp
+    mybutton.cpp \
+    mylistwidget.cpp
 
 HEADERS  += mainwindow.h \
-    mybutton.h
+    mybutton.h \
+    mylistwidget.h
 
 FORMS    += mainwindow.ui
 
